@@ -1,13 +1,12 @@
 const Router = require('koa-router')
 const router = new Router()
-router.post('/classic/latest', (ctx, next) => {
-  const query = ctx.req.query
-  if (true) {
-    // 全局报错
-    const error = new global.errs.ParameterException()
-    throw error
-  }
-  ctx.body = '/classic/latest'
+const {
+  PositiveIntegerValidator
+} = require('../../validators/validator')
+router.post('/v1/:id/classic/latest', async (ctx, next) => {
+  const v = await new PositiveIntegerValidator().validate(ctx)
+  const id = v.get('path.id', parsed = false)
+  ctx.body = 'success'
 })
 
 module.exports = router

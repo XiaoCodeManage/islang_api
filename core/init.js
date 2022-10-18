@@ -7,9 +7,19 @@ class InitManager {
     InitManager.app = app
     InitManager.InitLoadRouters()
     InitManager.LoadHttpException()
+    InitManager.loadConfig()
   }
+
+  // 配置文件
+  static loadConfig(path = '') {
+    const configPath = path || process.cwd() + '/config/config.js'
+    const config = require(configPath)
+    global.config = config // 定义到全局
+  }
+
   // 初始化动态路由方法
   static InitLoadRouters() {
+    // 获取 api下的所有接口
     const apiDirectory = `${process.cwd()}/app/api`
     requireDirectory(module, apiDirectory, {
       visit: whenLoadModule
