@@ -11,7 +11,7 @@ const {
 } = require('sequelize')
 
 class User extends Model {
-  // 判断账号密码是否错误
+  // 判断emial登录是否正确
   static async verifyEmailPassword(email, plainPassword) {
     const user = await User.findOne({
       where: {
@@ -19,16 +19,33 @@ class User extends Model {
       }
     })
     if (!user) {
-      console.log(global.errs)
-      throw new global.errs.AuthFailed('账号不存在')
+      // throw new Error('账号不存在')
+      return 0
     }
-    // 判断密码是否正确
-    const correct = bcrypt.compareSync(plainPassword, user.password)
+    const correct = bcrypt.compareSync(
+      plainPassword, user.password)
     if (!correct) {
-      throw new global.errs.AuthFailed('账号不存在')
+      // throw new global.errs.AuthFailed('密码不正确')
+      return 0
     }
-    // 通过以上判断  返回数据
     return user
+  }
+
+  // 判断微信登录是否正确
+  static async getUserByOpenid(openid) {
+    // 查询openid 是否存在 没有加入
+    const user = await User.findOne({
+      where: {
+        openid
+      }
+    })
+    return user
+  }
+  // 如果查询数据库没有openid 说明是新用户 注册一个
+  static async registerByOpenid(openid) {
+    return await User.create({
+      openid
+    })
   }
 }
 

@@ -4,7 +4,6 @@ const {
 // 全局异常处理
 const catchError = async (ctx, next) => {
   try {
-    console.log(111)
     await next()
   } catch (error) {
     // 开发环境

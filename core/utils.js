@@ -40,7 +40,7 @@ const findMembers = function (instance, {
 }
 
 
-
+// 生成token 函数
 const generateToken = function (uid, scope) {
   const secretKey = global.config.security.secretKey
   const expiresIn = global.config.security.expiresIn
@@ -48,7 +48,7 @@ const generateToken = function (uid, scope) {
     uid,
     scope
   }, secretKey, {
-    expiresIn: expiresIn
+    expiresIn // 过期时间
   })
   return token
 }
