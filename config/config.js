@@ -15,6 +15,6 @@ module.exports = {
   },
   wx: {
     appid: 'wxbcc06f0ee1d3456f',
-    secret: '88c5b33032d7c98ae9166651c110c7a9',
+    secret: '9f52dc07cd47620c85c4a4f62daf0677',
   }
 }

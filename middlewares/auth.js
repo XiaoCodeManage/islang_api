@@ -42,7 +42,17 @@ class Auth {
         uid,
         scope
       }
-      next()
+      await next()
+    }
+  }
+
+  // 验证token是否合法
+  static verifyToken(token) {
+    try {
+      jwt.verify(token, global.config.security.secretKey)
+      return true
+    } catch (err) {
+      return false
     }
   }
 }

@@ -1,6 +1,7 @@
 const Router = require('koa-router')
 const {
-  TokenValidator
+  TokenValidator,
+  NotEmptyValidator
 } = require('../../validators/validator')
 const {
   LoginType
@@ -51,9 +52,15 @@ router.post('/', async (ctx) => {
   }
 })
 
-// async function emailLogin(account, secret) {
-//   // 判断账号密码是否错误
-//   const user = User.verifyEmailPassword(account, secret)
-// }
+// 验证令牌的 api
+router.post('/verify', async (ctx) => {
+  // token
+  const v = await new NotEmptyValidator().validate(ctx)
+  let isToken = Auth.verifyToken(v.get('body.token'))
+  // 返回给客户端是否合法
+  ctx.body = {
+    isToken
+  }
+})
 
 module.exports = router

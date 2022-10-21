@@ -2,7 +2,12 @@ const axios = require('axios')
 const {
   generateToken
 } = require('../../core/utils')
-const User = require('../modules/user')
+const {
+  User
+} = require('../modules/user')
+const {
+  Auth
+} = require('../../middlewares/auth')
 class WXManager {
   static async codeToToken(code) {
     let {
@@ -14,7 +19,7 @@ class WXManager {
     if (res.status != 200) {
       throw new global.errs.AuthFailed('openid获取失败')
     }
-    if (res.data.errcode != 0) { // 0为 ok
+    if (res.data.errcode) { // 0为 ok
       throw new global.errs.AuthFailed('openid获取失败: ' + res.data.errcode)
     }
     // 判断openid是否存在数据库
